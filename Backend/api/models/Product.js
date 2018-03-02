@@ -1,13 +1,12 @@
 var mongoose = require('mongoose');
 
 var productSchema = mongoose.Schema({
-  name: {
-    type: String,
-    required: true,
-    trim: true,
-    lowercase: true
-  },
-  sellername: {
+    id:{
+      type:Number,
+        min:0
+    },
+
+    name: {
     type: String,
     required: true,
     trim: true,
@@ -22,7 +21,14 @@ var productSchema = mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  updatedAt: Date
+  updatedAt: Date,
+
+    sellerName: {
+        type: String,
+        required: true,
+        trim: true,
+        lowercase: true
+    }
 });
 
 mongoose.model('Product', productSchema);

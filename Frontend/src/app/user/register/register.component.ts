@@ -44,14 +44,12 @@ import {Router} from "@angular/router";
           <button class="btn btn-primary" [disabled]="!myForm.valid" type="submit">Sign me up!</button>
       </form>
   </div>
-{{ errorhandle }}
   `
 })
 export class RegisterComponent implements OnInit{
 
 
     myForm: FormGroup;
-  errorhandle = "";
 
     constructor(private http: HttpClient,private router: Router){
 
@@ -71,21 +69,8 @@ export class RegisterComponent implements OnInit{
         
         this.http.post(environment.apiUrl+'register', data, config)
         .subscribe(res=>{
-            console.log(res);
-            let message = res["msg"];
-            console.log(message);
-              if (message == "Registered successfully") {
-            //       // set token property
-            //       this.token = token;
-          
-            //       // store username and jwt token in local storage to keep user logged in between page refreshes
-            //       localStorage.setItem('user', JSON.stringify({ username: user.username, token: token }));
-                  this.errorhandle = "Register successful";
-                  this.router.navigate(["/user/login"]);
-              }else{
-                this.errorhandle = "Sorry, incorrect credentials";
-              }
-            });
+          console.log(res);
+        });
     }
 
     ngOnInit() {

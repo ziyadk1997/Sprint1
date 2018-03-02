@@ -1,6 +1,9 @@
-import { Component } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
+import {FormControl, FormGroup, Validators} from "@angular/forms";
+import {Router} from "@angular/router";
+import {FormsModule} from '@angular/forms';
 @Component({
   selector: 'app-store-products',
   template: `  <style>
@@ -19,7 +22,12 @@ import {HttpClient} from '@angular/common/http';
     </style>
     <h1>Items</h1>
     <br/>
-    <button style = "border-radius: 25px; width:300 px ;height:150 px;background-color: #4CAF50;padding: 10px; ">Add Item</button>
+  <form [formGroup]="myForm" class="container" #productForm="ngForm" (ngSubmit) = "createProduct(productForm.value)">
+  <input type = "text" class="form-control" name = "name" ngModel>
+    <br/>
+    <input type = "number" class="form-control" name = "price" ngModel>
+    <input class="btn btn-success" type = "submit" value = "submit">
+</form>
     <br/>
     <br/>
     <br/>
@@ -46,6 +54,8 @@ import {HttpClient} from '@angular/common/http';
 })
 export class ProductsComponent {
   data = [];
+  c =0;
+  cu=JSON.parse(localStorage.getItem("user")).username;
 
 constructor(private http:HttpClient){}
 
@@ -65,11 +75,37 @@ deleteProduct(ident:string){
 
 
 }
+createProduct(productForm){
+  var con =
+         {
+             headers:
+             {
+                  'Content-Type': 'application/json'
+              }
+         }
+   var product = JSON.stringify({
+                         name: productForm.name,
+                         price: productForm.price,
+                         sellerName: this.cu,
+                         id:this.c
+                     });
+  this.c++;
+  this.http.post(environment.apiUrl + '/product/createProduct/',product, con).subscribe(
+                res => {
+                    location.reload();
+                }
+            )
+this.myForm = new FormGroup({
+                name: new FormControl(null, Validators.required),
+                price: new FormControl(null, Validators.required),
+            });
+}
 
 ngOnInit(){
   this.GetProducts().subscribe(res=>{
     this.data=res['data'];
   })
 }
+
 
 }

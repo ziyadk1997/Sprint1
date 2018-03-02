@@ -8,14 +8,13 @@
     </div>
   </div>
   <ngx-theme-switcher></ngx-theme-switcher>
-  <a href = "/#/store">Store</a>
+  <button class="btn btn-primary" (click)="goToStore()">Store</button>
 </div>
 
 <nb-actions size="medium" class="header-container right">
   <nb-action>
-
+    
     <nb-user *ngIf="loggedin" [menu]="userMenu" [name]="user?.username" (menuClick)="onMenuClick($event)"></nb-user>
     <a *ngIf="loggedin==false" href="#/user/login" style="padding-right:5px">Login</a><a *ngIf="loggedin==false" href="#/user/register" style="padding-right:5px">Register</a>
-
   </nb-action>
 </nb-actions>

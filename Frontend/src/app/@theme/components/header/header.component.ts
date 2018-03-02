@@ -39,6 +39,10 @@ export class HeaderComponent implements OnInit {
     this.menuService.navigateHome();
   }
 
+  goToStore(){
+    window.location.href = 'http://localhost:4200/#/store';
+  }
+
   onMenuClick(event) {
     if (event.title === 'Logout') {
       localStorage.removeItem("user");
